@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../common/bootstrap.min.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="vue_app" v-cloak>
+    <div class="row">
+        <div class="col-md-6">
+            <h1>welcome {{name}}</h1>
+            <input type="text" class="form-control" v-model="name">
+            <h2>待办事项：</h2>
+            <ul class="list-group">
+                <li class="list-group-item" v-for="todo in todos | orderBy 'name' -1">{{todo.name}}
+                    <button class="btn btn-warning btn-xs pull-right" @click.prevent="deleteTodo(todo)">delete</button>
+                </li>
+            </ul>
+            <div class="form-group">
+                <input type="text" class="form-control" v-model="newToDo.name">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" @click.prevent="addTewToDo(newToDo)">添加</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <pre>{{$data|json}}</pre>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+</div>
+<!-- <script src="../../common/vue2.5.17.js"></script> -->
+<script src="../../common/vue1.0.28.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#vue_app',
+        data: {
+            name: 'Jay',
+            todos: [
+                {id: 1, name: 'html'}
+            ],
+            newToDo: {id: null, name: ''}
+        },
+        methods: {
+            addTewToDo: function (newToDo) {
+                this.todos.push(newToDo);
+                this.newToDo = {id: null, name: ''};
+            },
+            deleteTodo: function (todo) {
+                this.todos.$remove(todo);
+            }
+        }
+    });
+</script>
+</body>
+</html>
