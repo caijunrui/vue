@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../common/bootstrap.min3.3.7.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="box" v-cloak>
+    <div class="row">
+        <div class="col-md-6">
+            <form role="form">
+                <div class="form-group">
+                    <label for="">用户名：</label>
+                    <input type="text" class="form-control" placeholder="请输入用户名" v-model="name">
+                </div>
+                <div class="form-group">
+                    <label for="">年 龄：</label>
+                    <input type="text" class="form-control" placeholder="请输入年龄" v-model="age">
+                </div>
+                <div class="form-group">
+                    <input type="button" value="添加" class="btn btn-primary" @click="add">
+                    <input type="reset" value="重置" class="btn btn-danger">
+                </div>
+            </form>
+            <hr>
+            <table class="table table-bordered table-responsive table-striped">
+                <caption class="h2 text-info">用户信息表</caption>
+                <tr>
+                    <th class="text-center">序号</th>
+                    <th class="text-center">名字</th>
+                    <th class="text-center">年龄</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                <tr class="text-center" v-for="item in info">
+                    <td>{{$index+1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.age}}</td>
+                    <td>
+                        <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#layer"
+                                @click="nowIndex=$index">删除
+                        </button>
+                    </td>
+                </tr>
+                <tr class="text-center" v-show="info.length!=0">
+                    <td colspan="4">
+                        <button class="btn btn-danger btn-md" data-toggle="modal" data-target="#layer"
+                                @click="nowIndex=-2">删除全部
+                        </button>
+                    </td>
+                </tr>
+                <tr class="text-center" v-show="info.length==0">
+                    <td colspan="4"><span class="text-muted">暂无数据......</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="layer" data-index="{{nowIndex}}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal"><span>&times;</span></button>
+                    <h4>你确定要删除吗？</h4>
+                </div>
+                <div class="modal-body text-right">
+                    <button class="btn btn-danger btn-sm" data-dismiss="modal" @click="del(nowIndex)">确定</button>
+                    <button class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../../common/jquery-3.3.1.min.js"></script>
+<script src="../../../common/bootstrap.min3.3.7.js"></script>
+<script src="../../../common/vue1.0.28.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#box',
+        data: {
+            info: [
+                {name: '周大福', age: 20},
+                {name: '周小福', age: 19},
+            ],
+            name: '',
+            age: '',
+            nowIndex: -1,
+        },
+        methods: {
+            add: function () {
+                this.info.push({
+                    name: this.name,
+                    age: this.age
+                });
+                this.name = '';
+                this.age = '';
+            },
+            del: function (n) {
+                if (n == -2) {
+                    this.info = [];
+                } else {
+                    this.info.splice(n, 1);
+                }
+            },
+        }
+    });
+</script>
+</body>
+</html>

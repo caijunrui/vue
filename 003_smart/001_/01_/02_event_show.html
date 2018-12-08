@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../common/bootstrap.min3.3.7.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        .div {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="box" v-cloak>
+    <div class="row">
+        <div class="col-md-6" @click="show()">
+            <input type="button" value="按钮1" class="btn btn-default" v-on:click="show">
+            <input type="button" value="按钮2" class="btn btn-default" v-on:click="add">
+            <input type="button" value="按钮3" class="btn btn-default" v-on:click="toggleDiv">
+            <input type="button" value="阻止冒泡" class="btn btn-default" @click="show2($event)">
+            <input type="button" value="阻止冒泡2" class="btn btn-default" @click.stop="show3($event)">
+            <input type="button" value="阻止默认行为" class="btn btn-default" @contextmenu="show4($event)">
+            <input type="button" value="阻止默认行为2" class="btn btn-default" @contextmenu.prevent="show5($event)">
+            <ul class="list-group">
+                <li class="list-group-item" v-for="val in arr">{{val}}</li>
+            </ul>
+            <div class="div" v-show="flag"></div>
+        </div>
+    </div>
+</div>
+<script src="../../../common/vue1.0.28.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#box',
+        data: {
+            flag: true,
+            arr: ['html', 'css']
+        },
+        methods: {
+            show: function () {
+                alert(1);
+            },
+            add: function () {
+                this.arr.push('vue');
+            },
+            toggleDiv: function () {
+                this.flag = !this.flag;
+            },
+            show2: function (e) {
+                alert(e.clientX);
+                e.cancelBubble = true;
+            },
+            show3: function (e) {
+                alert(e.clientX)
+            },
+            show4: function (e) {
+                alert(e.clientX);
+                e.preventDefault();
+            },
+            show5: function (e) {
+                alert(e.clientX)
+            }
+        }
+    });
+</script>
+</body>
+</html>
