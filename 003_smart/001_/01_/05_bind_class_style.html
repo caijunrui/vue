@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../common/bootstrap.min3.3.7.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .gray {
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="box" v-cloak>
+    <div class="row">
+        <div class="col-md-6">
+            <img v-bind:src="url" alt="">
+            <img :src="url" alt="" :width="w" :title="t">
+        </div>
+        <div class="col-md-6">
+            <h4 :class="[col_red]">这是一段文字。。。</h4>
+            <h4 :class="[col_red,col_gray]">这是一段文字。。。</h4>
+            <h4 :class="{red:false,gray:true}">这是一段文字。。。</h4>
+            <h4 :class="{red:a,gray:b}">这是一段文字。。。</h4>
+            <h4 :class="classJson">这是一段文字。。。</h4>
+            <br>
+            <h3 :style="[c,d]">这是另一段文字。。。</h3>
+            <h3 :style="{fontSize:'30px',color: 'blue'}">这是另一段文字。。。</h3>
+            <h3 :style="styleJson">这是另一段文字。。。</h3>
+        </div>
+    </div>
+</div>
+<script src="../../../common/vue1.0.28.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#box',
+        data: {
+            url: 'https://www.baidu.com/img/bd_logo1.png?where=super',
+            w: '200px',
+            t: '百度logo',
+            col_red: 'red',
+            col_gray: 'gray',
+            a: true,
+            b: false,
+            classJson: {
+                red: true,
+                gray: true
+            },
+            c: {backgroundColor: 'blue'},
+            d: {color: 'white'},
+            styleJson: {
+                backgroundColor: 'yellow',
+                color: 'blue'
+            }
+        },
+        methods: {}
+    });
+</script>
+</body>
+</html>
