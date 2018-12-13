@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../common/bootstrap.min3.3.7.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container" id="box" v-cloak>
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-primary" @click="get()">get</button>
+            <button class="btn btn-primary" @click="get2()">get2</button>
+            <button class="btn btn-primary" @click="post()">post</button>
+            <button class="btn btn-primary" @click="jsonp1()">jsonp1</button>
+            <button class="btn btn-primary" @click="jsonp2()">jsonp2</button>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+</div>
+<script src="../../../common/vue1.0.28.js"></script>
+<script src="../../../common/vue-resource0.7.0.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#box',
+        data: {},
+        methods: {
+            get: function () {
+                this.$http.get('a.txt').then(function (res) {
+                    alert(res.data);
+                }, function (res) {
+                    alert(res.status);
+                });
+            },
+            get2: function () {
+                this.$http.get('get.php', {
+                    a: 1,
+                    b: 2
+                }).then(function (res) {
+                    alert(res.data);
+                }, function (res) {
+                    alert(res.status);
+                });
+            },
+            post: function () {
+                this.$http.post('post.php', {
+                    a: 10,
+                    b: 2
+                }, {
+                    emulateJSON: true
+                }).then(function (res) {
+                    alert(res.data);
+                }, function (res) {
+                    alert(res.status);
+                });
+            },
+            jsonp1: function () {
+                //https://sug.so.360.cn/suggest?callback=suggest_so&word=a
+                this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su', {
+                    wd: 'a'
+                }, {
+                    jsonp: 'cb'
+                }).then(function (res) {
+                    console.log(res);
+                    console.log(res.data.s);
+                }, function (res) {
+                    alert(res.status);
+                });
+            },
+            jsonp2: function () {
+                // https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&cb=jshow
+                this.$http.jsonp('https://sug.so.360.cn/suggest', {
+                    word: 'a',
+                    encodein:'utf-8',
+                    encodeout: 'utf-8'
+                }, {
+                    jsonp: 'callback',
+                }).then(function (res) {
+                    console.log(res);
+                    console.log(res.data.s);
+                }, function (res) {
+                    alert(res.status);
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>
