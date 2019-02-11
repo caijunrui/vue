@@ -23,25 +23,30 @@
         data: {
             msg: 'well'
         },
-        created: function () {
-            
+        created:function(){
+            console.log('实例已经创建');
         },
-        beforeCompile:function () {
-            
+        beforeCompile:function(){
+            console.log('编译之前');
         },
-        compiled: function () {
-            
+        compiled:function(){
+            console.log('编译之后');
         },
-        ready: function () {
-            
+        ready:function(){
+            console.log('插入到文档中');
         },
-        beforeDestroy: function () {
-            
+        beforeDestroy:function(){
+            console.log('销毁之前');
         },
-        destroyed: function () {
-            
+        destroyed:function(){
+            console.log('销毁之后');
         }
     });
+
+    /*点击页面销毁vue对象*/
+    document.onclick=function(){
+        vm.$destroy();
+    };
 </script>
 </body>
 </html>
